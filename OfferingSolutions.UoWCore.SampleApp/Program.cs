@@ -1,5 +1,6 @@
 ﻿using OfferingSolutions.UoWCore.SampleApp.Models;
 using OfferingSolutions.UoWCore.UnitOfWorkContext;
+using SampleApp.ExampleRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,16 +65,37 @@ namespace OfferingSolutions.UoWCore.SampleApp
                     Person findByWithThings = unitOfWorkContext.GetSingle(x => x.Name == "Fabian", includes: incl);
 
                     // Find a person by id but throws exception if not found
-                    var personWithIdMayThrowException = unitOfWorkContext.GetSingleBy<Person>(x => x.Id == 6);
-                    var personWithIdMayThrowExceptionASync = unitOfWorkContext.GetSingleByASync<Person>(x => x.Id == 6);
+                    // var personWithIdMayThrowException = unitOfWorkContext.GetSingleBy<Person>(x => x.Id == 6);
+                    // var personWithIdMayThrowExceptionASync = unitOfWorkContext.GetSingleByASync<Person>(x => x.Id == 6);
 
                     //Update an existing person
+                    Person findOneToUpdate = unitOfWorkContext.GetSingle<Person>(x => x.Name == "Fabian");
+                    findOneToUpdate.Name = "Fabian2";
+
                     unitOfWorkContext.Update(person);
+                    unitOfWorkContext.Save();
+
+                    Person findOneAfterUpdate = unitOfWorkContext.GetSingle<Person>(x => x.Name == "Fabian2");
 
                     //Deleting a Person by Id or by entity
                     unitOfWorkContext.Delete(person);
                 }
 
+                ///////////////////////////////////////////////////////////////////
+                // Custom repositories
+                ///////////////////////////////////////////////////////////////////
+
+                using (IPersonRepository personRepository = new PersonRepository(new DataBaseContext()))
+                {
+                    personRepository.Add(new Person() { Name = "John Doe" });
+                    personRepository.Save();
+                    var receivedPerson = personRepository.GetSingle(x => x.Name == "John Doe");
+                    Console.WriteLine(receivedPerson);
+
+                    // Does something good ...
+                    personRepository.MyNewFunction(6);
+                }
+                
                 Console.ReadLine();
             }
             catch (Exception ex)

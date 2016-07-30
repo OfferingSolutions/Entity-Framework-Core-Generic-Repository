@@ -11,5 +11,10 @@ namespace OfferingSolutions.UoWCore.SampleApp.Models
         public string Name { get; set; }
         public int Age { get; set; }
         public List<Thing> Things { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Name} {Age}";
+        }
     }
 }
