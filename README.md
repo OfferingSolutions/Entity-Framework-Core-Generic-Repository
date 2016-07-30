@@ -1,4 +1,4 @@
-# Repository Pattern with UnitOfWork // Entity Framework Core
+# Repository Pattern // UnitOfWork // Entity Framework Core
 
 
 
