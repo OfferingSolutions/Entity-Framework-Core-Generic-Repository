@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using SampleApp;
+using OfferingSolutions.UoWCore.SampleApp;
 
 namespace OfferingSolutions.UoWCore.SampleApp.Migrations
 {
@@ -16,7 +16,7 @@ namespace OfferingSolutions.UoWCore.SampleApp.Migrations
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("SampleApp.Person", b =>
+            modelBuilder.Entity("OfferingSolutions.UoWCore.SampleApp.Models.Person", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -30,7 +30,7 @@ namespace OfferingSolutions.UoWCore.SampleApp.Migrations
                     b.ToTable("Persons");
                 });
 
-            modelBuilder.Entity("SampleApp.Thing", b =>
+            modelBuilder.Entity("OfferingSolutions.UoWCore.SampleApp.Models.Thing", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -46,9 +46,9 @@ namespace OfferingSolutions.UoWCore.SampleApp.Migrations
                     b.ToTable("Things");
                 });
 
-            modelBuilder.Entity("SampleApp.Thing", b =>
+            modelBuilder.Entity("OfferingSolutions.UoWCore.SampleApp.Models.Thing", b =>
                 {
-                    b.HasOne("SampleApp.Person")
+                    b.HasOne("OfferingSolutions.UoWCore.SampleApp.Models.Person")
                         .WithMany("Things")
                         .HasForeignKey("PersonId");
                 });

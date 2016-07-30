@@ -1,7 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using OfferingSolutions.UoWCore.SampleApp.Models;
 using OfferingSolutions.UoWCore.UnitOfWorkContext;
-using SampleApp;
-using SampleApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,9 +76,9 @@ namespace OfferingSolutions.UoWCore.SampleApp
 
                 Console.ReadLine();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-
+                Console.WriteLine(ex);
                 throw;
             }
         }
