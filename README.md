@@ -1,4 +1,4 @@
-# OfferingSolutions UnitOfWork with Entity Framework Core
+# Repository Pattern with UnitOfWork // Entity Framework Core
 
 
 
