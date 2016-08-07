@@ -23,10 +23,10 @@ namespace OfferingSolutions.UoWCore.SampleApp
                         }
                     } };
 
-                    //Adding a new Entity, for example "Person"
+                    // Adding a new Entity, for example "Person"
                     unitOfWorkContext.Add(person);
 
-                    //Savechanges
+                    // Savechanges
                     unitOfWorkContext.Save();
 
                     unitOfWorkContext.SaveASync();
@@ -52,7 +52,8 @@ namespace OfferingSolutions.UoWCore.SampleApp
                     List<Person> allPersonsOnAge35OrderedAndWithThings = unitOfWorkContext.GetAll<Person>(
                         x => x.Age == 35,
                         orderBy: q => q.OrderBy(d => d.Name),
-                        includes: incl).ToList();
+                        includes: incl)
+                        .ToList();
 
                     // Get all Persons and include its properties
                     List<Person> allPersonsWithThings = unitOfWorkContext.GetAll<Person>(includes: incl).ToList();
@@ -68,7 +69,7 @@ namespace OfferingSolutions.UoWCore.SampleApp
                     // var personWithIdMayThrowException = unitOfWorkContext.GetSingleBy<Person>(x => x.Id == 6);
                     // var personWithIdMayThrowExceptionASync = unitOfWorkContext.GetSingleByASync<Person>(x => x.Id == 6);
 
-                    //Update an existing person
+                    // Update an existing person
                     Person findOneToUpdate = unitOfWorkContext.GetSingle<Person>(x => x.Name == "Fabian");
                     findOneToUpdate.Name = "Fabian2";
 
@@ -77,7 +78,7 @@ namespace OfferingSolutions.UoWCore.SampleApp
 
                     Person findOneAfterUpdate = unitOfWorkContext.GetSingle<Person>(x => x.Name == "Fabian2");
 
-                    //Deleting a Person by Id or by entity
+                    // Deleting a Person by Id or by entity
                     unitOfWorkContext.Delete(person);
                 }
 
