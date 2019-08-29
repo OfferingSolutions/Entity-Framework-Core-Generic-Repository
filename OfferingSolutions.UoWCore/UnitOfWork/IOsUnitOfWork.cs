@@ -10,6 +10,6 @@ namespace OfferingSolutions.UoWCore.UnitOfWork
 
         int Save();
 
-        Task<int> SaveASync();
+        Task<int> SaveAsync();
     }
 }

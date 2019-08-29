@@ -28,7 +28,7 @@ namespace OfferingSolutions.UoWCore.UnitOfWork
             return _dbContext.SaveChanges();
         }
 
-        Task<int> IOsUnitOfWork.SaveASync()
+        Task<int> IOsUnitOfWork.SaveAsync()
         {
             return _dbContext.SaveChangesAsync();
         }

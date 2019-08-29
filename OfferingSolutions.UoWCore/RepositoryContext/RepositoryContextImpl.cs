@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using OfferingSolutions.UoWCore.ContextBase;
+using Microsoft.EntityFrameworkCore.Query;
+using OfferingSolutions.UoWCore.BaseContext;
 
 namespace OfferingSolutions.UoWCore.RepositoryContext
 {
-    public class RepositoryContextImpl<T> : ContextBaseImpl, IRepositoryContext<T> where T : class
+    public class RepositoryContextImpl<T> : ContextBase, IRepositoryContext<T> where T : class
     {
         public RepositoryContextImpl(DbContext databaseContext)
             : base(databaseContext)
@@ -16,49 +16,93 @@ namespace OfferingSolutions.UoWCore.RepositoryContext
 
         }
 
-        public IQueryable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<Expression<Func<T, object>>> includes = null)
+        public virtual void Add(T entity)
         {
-            return base.GetAll(filter, orderBy, includes);
+            base.Add(entity);
         }
 
-        public Task<IQueryable<T>> GetAllASync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<Expression<Func<T, object>>> includes = null)
+        public virtual void AddAsync(T entity)
         {
-            return base.GetAllASync(filter, orderBy, includes);
-        }
-
-        public virtual T GetSingleBy(Expression<Func<T, bool>> predicate)
-        {
-            return base.GetSingleBy<T>(predicate);
-        }
-
-        public Task<T> GetSingleByASync(Expression<Func<T, bool>> predicate)
-        {
-            return base.GetSingleByASync<T>(predicate);
-        }
-
-        public Task<T> GetSingleASync(Expression<Func<T, bool>> predicate, List<Expression<Func<T, object>>> includes = null)
-        {
-            return base.GetSingleASync(predicate, includes);
-        }
-
-        public virtual T GetSingle(Expression<Func<T, bool>> predicate, List<Expression<Func<T, object>>> includes = null)
-        {
-            return base.GetSingle(predicate, includes);
-        }
-
-        public virtual void Add(T toAdd)
-        {
-            base.Add(toAdd);
-        }
-
-        public virtual void Update(T toUpdate)
-        {
-            base.Update(toUpdate);
+            base.AddAsync(entity);
         }
 
         public virtual void Delete(T entity)
         {
-            base.Delete<T>(entity);
+            base.Delete(entity);
+        }
+
+        public virtual IQueryable<T> GetAll()
+        {
+            return base.GetAll<T>(null, null, null, null, null);
+        }
+
+        public virtual IQueryable<T> GetAll(Expression<Func<T, bool>> predicate)
+        {
+            return base.GetAll<T>(predicate, null, null, null, null);
+        }
+        public virtual Task<IQueryable<T>> GetAllAsync()
+        {
+            return base.GetAllAsync<T>(null, null, null, null, null);
+        }
+
+        public virtual Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
+        {
+            return base.GetAllAsync(predicate, null, null, null, null);
+        }
+
+        public virtual void Delete(Expression<Func<T, bool>> predicate)
+        {
+            base.Delete(predicate);
+        }
+
+        public virtual IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, int? skip = null, int? take = null)
+        {
+            return base.GetAll(predicate, orderBy, include, skip, take);
+        }
+
+        public virtual IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null, string orderBy = null, string orderDirection = "asc", Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, int? skip = null, int? take = null)
+        {
+            return base.GetAll(predicate, orderBy, orderDirection, include, skip, take);
+        }
+
+        public virtual Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, int? skip = null, int? take = null)
+        {
+            return base.GetAllAsync(predicate, orderBy, include, skip, take);
+        }
+
+        public virtual Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, string orderBy = null, string orderDirection = "asc", Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, int? skip = null, int? take = null)
+        {
+            return base.GetAllAsync(predicate, orderBy, orderDirection, include, skip, take);
+        }
+
+        public virtual T GetSingle(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
+        {
+            return base.GetSingle(predicate, include);
+        }
+
+        public virtual Task<T> GetSingleAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
+        {
+            return base.GetSingleAsync(predicate, include);
+        }
+
+        public virtual T Update(T toUpdate)
+        {
+            return base.Update(toUpdate);
+        }
+
+        public virtual int Count()
+        {
+            return base.Count<T>();
+        }
+
+        public virtual IQueryable<T> GetAll(Func<IQueryable<T>, IIncludableQueryable<T, object>> include)
+        {
+            return base.GetAll(include);
+        }
+
+        public virtual Task<IQueryable<T>> GetAllAsync(Func<IQueryable<T>, IIncludableQueryable<T, object>> include)
+        {
+            return base.GetAllAsync(include);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace OfferingSolutions.UoWCore.SampleApp
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=UoWCore;Trusted_Connection=True;MultipleActiveResultSets=true;");
+            optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=UoWCore;Trusted_Connection=True;");
         }
     }
 }

@@ -1,10 +1,11 @@
-﻿using OfferingSolutions.UoWCore.SampleApp.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+using OfferingSolutions.UoWCore.SampleApp.Models;
 using OfferingSolutions.UoWCore.UnitOfWorkContext;
 using SampleApp.ExampleRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace OfferingSolutions.UoWCore.SampleApp
 {
@@ -16,12 +17,17 @@ namespace OfferingSolutions.UoWCore.SampleApp
             {
                 using (IOsUnitOfWorkContext unitOfWorkContext = new OsUnitOfWorkContext(new DataBaseContext()))
                 {
-                    Person person = new Person() { Age = 35, Name = "Fabian", Things = new List<Thing>() {
+                    Person person = new Person()
+                    {
+                        Age = 35,
+                        Name = "Fabian",
+                        Things = new List<Thing>() {
                         new Thing()
                         {
                             Name = "A Thing"
                         }
-                    } };
+                    }
+                    };
 
                     // Adding a new Entity, for example "Person"
                     unitOfWorkContext.Add(person);
@@ -33,7 +39,7 @@ namespace OfferingSolutions.UoWCore.SampleApp
 
                     // Get all Persons
                     var persons = unitOfWorkContext.GetAll<Person>().ToList();
-                    var personsAsync = unitOfWorkContext.GetAllASync<Person>();
+                    var personsAsync = unitOfWorkContext.GetAllAsync<Person>();
 
                     foreach (var item in persons)
                     {
@@ -48,22 +54,23 @@ namespace OfferingSolutions.UoWCore.SampleApp
                     List<Person> allPersonsOnAge35Ordered = unitOfWorkContext.GetAll<Person>(x => x.Age == 35, orderBy: q => q.OrderBy(d => d.Name)).ToList();
 
                     // Get all Persons with the age of 35 ordered by Name and include its properties
-                    var incl = new List<Expression<Func<Person, object>>>() { p => p.Things };
+                    Func<IQueryable<Person>, IIncludableQueryable<Person, object>> include = source => source.Include(y => y.Things);
+
                     List<Person> allPersonsOnAge35OrderedAndWithThings = unitOfWorkContext.GetAll<Person>(
                         x => x.Age == 35,
                         orderBy: q => q.OrderBy(d => d.Name),
-                        includes: incl)
+                        include: include)
                         .ToList();
 
                     // Get all Persons and include its properties
-                    List<Person> allPersonsWithThings = unitOfWorkContext.GetAll<Person>(includes: incl).ToList();
+                    List<Person> allPersonsWithThings = unitOfWorkContext.GetAll<Person>(include: include).ToList();
 
                     // Find a single Person with a specific name, is null if not found
                     Person findBy = unitOfWorkContext.GetSingle<Person>(x => x.Id == 6);
-                    var findByASync = unitOfWorkContext.GetSingleASync<Person>(x => x.Id == 6);
+                    var findByASync = unitOfWorkContext.GetSingleAsync<Person>(x => x.Id == 6);
 
                     // Find a single Person with a specific name and include its siblings
-                    Person findByWithThings = unitOfWorkContext.GetSingle(x => x.Name == "Fabian", includes: incl);
+                    Person findByWithThings = unitOfWorkContext.GetSingle<Person>(x => x.Name == "Fabian", include: include);
 
                     // Find a person by id but throws exception if not found
                     // var personWithIdMayThrowException = unitOfWorkContext.GetSingleBy<Person>(x => x.Id == 6);
@@ -91,12 +98,13 @@ namespace OfferingSolutions.UoWCore.SampleApp
                     personRepository.Add(new Person() { Name = "John Doe" });
                     personRepository.Save();
                     var receivedPerson = personRepository.GetSingle(x => x.Name == "John Doe");
+                    var allPersons = personRepository.GetAll(x => x.Name == "John Doe");
                     Console.WriteLine(receivedPerson);
 
                     // Does something good ...
                     personRepository.MyNewFunction(6);
                 }
-                
+
                 Console.ReadLine();
             }
             catch (Exception ex)

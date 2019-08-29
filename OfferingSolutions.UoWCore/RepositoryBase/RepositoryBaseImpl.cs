@@ -1,9 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+using System.Linq.Dynamic.Core;
 
 namespace OfferingSolutions.UoWCore.RepositoryBase
 {
@@ -16,28 +17,103 @@ namespace OfferingSolutions.UoWCore.RepositoryBase
             _dataBaseContext = context;
         }
 
-        public IQueryable<T> GetAll(Expression<Func<T, bool>> filter = null, 
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, 
-            List<Expression<Func<T, object>>> includes = null)
+        public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null,
+          Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+          Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+          int? skip = null, int? take = null)
         {
-            IQueryable<T> query = GetQueryable(filter, includes);
+            IQueryable<T> query = GetQueryable(predicate, include);
 
             if (orderBy != null)
             {
-                return orderBy(query);
+                query = orderBy(query);
+            }
+
+            if (skip != null && skip.HasValue)
+            {
+                query = query.Skip(skip.Value);
+            }
+
+            if (take != null && take.HasValue)
+            {
+                query = query.Take(take.Value);
+            }
+
+            return query;
+
+        }
+
+        public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null,
+        string orderBy = null, string orderDirection = "asc",
+         Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+         int? skip = null, int? take = null)
+        {
+            IQueryable<T> query = GetQueryable(predicate, include);
+
+            if (orderBy != null)
+            {
+                query = query.OrderBy(orderBy, orderDirection);
+            }
+
+            if (skip != null && skip.HasValue)
+            {
+                query = query.Skip(skip.Value);
+            }
+
+            if (take != null && take.HasValue)
+            {
+                query = query.Take(take.Value);
             }
 
             return query;
         }
 
-        public Task<IQueryable<T>> GetAllASync(Expression<Func<T, bool>> filter = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<Expression<Func<T, object>>> includes = null)
+        public Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null,
+         Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+         Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+         int? skip = null, int? take = null)
         {
-            IQueryable<T> query = GetQueryable(filter, includes);
+            IQueryable<T> query = GetQueryable(predicate, include);
 
             if (orderBy != null)
             {
-                return new Task<IQueryable<T>>(() => orderBy(query));
+                query = orderBy(query);
+            }
+
+            if (skip != null && skip.HasValue)
+            {
+                query = query.Skip(skip.Value);
+            }
+
+            if (take != null && take.HasValue)
+            {
+                query = query.Take(take.Value);
+            }
+
+            return new Task<IQueryable<T>>(() => query);
+
+        }
+
+        public Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null,
+        string orderBy = null, string orderDirection = "asc",
+         Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+         int? skip = null, int? take = null)
+        {
+            IQueryable<T> query = GetQueryable(predicate, include);
+
+            if (orderBy != null)
+            {
+                query = query.OrderBy(orderBy, orderDirection);
+            }
+
+            if (skip != null && skip.HasValue)
+            {
+                query = query.Skip(skip.Value);
+            }
+
+            if (take != null && take.HasValue)
+            {
+                query = query.Take(take.Value);
             }
 
             return new Task<IQueryable<T>>(() => query);
@@ -48,72 +124,68 @@ namespace OfferingSolutions.UoWCore.RepositoryBase
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public virtual T GetSingleBy(Expression<Func<T, bool>> predicate)
+         public T GetSingle(
+          Expression<Func<T, bool>> predicate = null,
+          Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
         {
-            return _dataBaseContext.Set<T>().Single(predicate);
+            IQueryable<T> query = GetQueryable(predicate, include);
+
+            return query.FirstOrDefault();
         }
 
-        public virtual Task<T> GetSingleByASync(Expression<Func<T, bool>> predicate)
+        public Task<T> GetSingleAsync(
+          Expression<Func<T, bool>> predicate = null,
+          Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
         {
-            return _dataBaseContext.Set<T>().SingleAsync(predicate);
+            IQueryable<T> query = GetQueryable(predicate, include);
+
+            return query.FirstOrDefaultAsync();
         }
 
-        public virtual T FindBy(Expression<Func<T, bool>> wherePredicate, List<Expression<Func<T, object>>> includes = null)
+        public virtual void Add(T entity)
         {
-            IQueryable<T> query = _dataBaseContext.Set<T>();
-            if (includes != null)
-            {
-                foreach (var includeProperty in includes)
-                {
-                    query = query.Include(includeProperty);
-                }
-            }
-            return query.Where(wherePredicate).FirstOrDefault();
+            _dataBaseContext.Set<T>().Add(entity);
         }
 
-        public virtual Task<T> FindByASync(Expression<Func<T, bool>> wherePredicate, List<Expression<Func<T, object>>> includes = null)
+        public virtual void AddAsync(T entity)
         {
-            IQueryable<T> query = _dataBaseContext.Set<T>();
-            if (includes != null)
-            {
-                foreach (var includeProperty in includes)
-                {
-                    query = query.Include(includeProperty);
-                }
-            }
-            return query.Where(wherePredicate).FirstOrDefaultAsync();
+            _dataBaseContext.Set<T>().AddAsync(entity);
         }
 
-        public virtual void Add(T toAdd)
+        public T Update(T entity)
         {
-            _dataBaseContext.Set<T>().Add(toAdd);
+            _dataBaseContext.Set<T>().Update(entity);
+            return entity;
         }
 
-        public virtual void Update(T toUpdate)
+        public void Delete(Expression<Func<T, bool>> predicate)
         {
-            _dataBaseContext.Entry(toUpdate).State = EntityState.Modified;
+            var entity = GetSingle(predicate: predicate);
+            _dataBaseContext.Set<T>().Remove(entity);
         }
-        
-        public virtual void Delete(T entity)
+
+        public void Delete(T entity)
         {
             _dataBaseContext.Set<T>().Remove(entity);
         }
 
-        private IQueryable<T> GetQueryable(Expression<Func<T, bool>> filter, List<Expression<Func<T, object>>> includes)
+        public int Count()
+        {
+            return _dataBaseContext.Set<T>().Count();
+        }
+
+        private IQueryable<T> GetQueryable(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
         {
             IQueryable<T> query = _dataBaseContext.Set<T>();
 
-            if (filter != null)
+            if (include != null)
             {
-                query = query.Where(filter);
+                query = include(query);
             }
 
-            if(includes != null)
+            if (predicate != null)
             {
-                foreach (var includeProperty in includes)
-                {
-                    query = query.Include(includeProperty);
-                }
+                query = query.Where(predicate);
             }
 
             return query;

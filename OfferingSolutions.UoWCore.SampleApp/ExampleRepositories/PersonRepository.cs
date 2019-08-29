@@ -1,10 +1,8 @@
 ﻿using OfferingSolutions.UoWCore.RepositoryContext;
 using OfferingSolutions.UoWCore.SampleApp;
 using OfferingSolutions.UoWCore.SampleApp.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SampleApp.ExampleRepositories
 {
@@ -19,6 +17,11 @@ namespace SampleApp.ExampleRepositories
         public void MyNewFunction(int id)
         {
             //Do Something
+        }
+
+        public new List<Person> GetAll()
+        {
+            return base.GetAll().ToList();
         }
 
         public override void Add(Person toAdd)
