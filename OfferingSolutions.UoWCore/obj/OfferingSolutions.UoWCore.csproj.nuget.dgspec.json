@@ -1,0 +1,73 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\_git\\OfferingSolutions\\OfferingSolutions.UnitOfWork.Core\\OfferingSolutions.UoWCore\\OfferingSolutions.UoWCore.csproj": {}
+  },
+  "projects": {
+    "C:\\_git\\OfferingSolutions\\OfferingSolutions.UnitOfWork.Core\\OfferingSolutions.UoWCore\\OfferingSolutions.UoWCore.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\_git\\OfferingSolutions\\OfferingSolutions.UnitOfWork.Core\\OfferingSolutions.UoWCore\\OfferingSolutions.UoWCore.csproj",
+        "projectName": "OfferingSolutions.UoWCore",
+        "projectPath": "C:\\_git\\OfferingSolutions\\OfferingSolutions.UnitOfWork.Core\\OfferingSolutions.UoWCore\\OfferingSolutions.UoWCore.csproj",
+        "packagesPath": "C:\\Users\\Fabian\\.nuget\\packages\\",
+        "outputPath": "C:\\_git\\OfferingSolutions\\OfferingSolutions.UnitOfWork.Core\\OfferingSolutions.UoWCore\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Fabian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://reyinformatik.pkgs.visualstudio.com/_packaging/reyapptoolkit/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[2.2.6, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "System.Linq.Dynamic.Core": {
+              "target": "Package",
+              "version": "[1.0.18, )"
+            },
+            "System.Linq.Expressions": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
