@@ -1,9 +1,0 @@
-C:\_git\OfferingSolutions\OfferingSolutions.UnitOfWork.Core\OfferingSolutions.UoWCore\bin\Debug\netstandard2.0\OfferingSolutions.UoWCore.deps.json
-C:\_git\OfferingSolutions\OfferingSolutions.UnitOfWork.Core\OfferingSolutions.UoWCore\bin\Debug\netstandard2.0\OfferingSolutions.UoWCore.dll
-C:\_git\OfferingSolutions\OfferingSolutions.UnitOfWork.Core\OfferingSolutions.UoWCore\bin\Debug\netstandard2.0\OfferingSolutions.UoWCore.pdb
-C:\_git\OfferingSolutions\OfferingSolutions.UnitOfWork.Core\OfferingSolutions.UoWCore\obj\Debug\netstandard2.0\OfferingSolutions.UoWCore.csproj.CoreCompileInputs.cache
-C:\_git\OfferingSolutions\OfferingSolutions.UnitOfWork.Core\OfferingSolutions.UoWCore\obj\Debug\netstandard2.0\OfferingSolutions.UoWCore.AssemblyInfoInputs.cache
-C:\_git\OfferingSolutions\OfferingSolutions.UnitOfWork.Core\OfferingSolutions.UoWCore\obj\Debug\netstandard2.0\OfferingSolutions.UoWCore.AssemblyInfo.cs
-C:\_git\OfferingSolutions\OfferingSolutions.UnitOfWork.Core\OfferingSolutions.UoWCore\obj\Debug\netstandard2.0\OfferingSolutions.UoWCore.dll
-C:\_git\OfferingSolutions\OfferingSolutions.UnitOfWork.Core\OfferingSolutions.UoWCore\obj\Debug\netstandard2.0\OfferingSolutions.UoWCore.pdb
-C:\_git\OfferingSolutions\OfferingSolutions.UnitOfWork.Core\OfferingSolutions.UoWCore\obj\Debug\netstandard2.0\OfferingSolutions.UoWCore.csprojAssemblyReference.cache
