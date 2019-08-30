@@ -13,8 +13,6 @@ Have fun. Hope this helps :)
 
 ## Example for Generic Repositories
 
-`Personrepository.cs`
-
 ```c#
 interface IPersonRepository : IGenericRepositoryContext<Person>
 {
