@@ -16,21 +16,6 @@ namespace OfferingSolutions.GenericEFCore.RepositoryContext
 
         }
 
-        public virtual void Add(T entity)
-        {
-            base.Add(entity);
-        }
-
-        public virtual void AddAsync(T entity)
-        {
-            base.AddAsync(entity);
-        }
-
-        public virtual void Delete(T entity)
-        {
-            base.Delete(entity);
-        }
-
         public virtual IQueryable<T> GetAll()
         {
             return base.GetAll<T>(null, null, null, null, null);
@@ -40,6 +25,31 @@ namespace OfferingSolutions.GenericEFCore.RepositoryContext
         {
             return base.GetAll<T>(predicate, null, null, null, null);
         }
+
+        public virtual IQueryable<T> GetAll(Func<IQueryable<T>, IIncludableQueryable<T, object>> include)
+        {
+            return base.GetAll(include);
+        }
+
+        public virtual IQueryable<T> GetAll(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IIncludableQueryable<T, object>> include)
+        {
+            return base.GetAll(predicate, include, null, null, null);
+        }
+
+        public virtual IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,  int? skip = null, int? take = null)
+        {
+            return base.GetAll(predicate, include, orderBy, skip, take);
+        }
+        public virtual IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null, 
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, 
+            string orderBy = null, string orderDirection = "asc", 
+             int? skip = null, int? take = null)
+        {
+            return base.GetAll(predicate, include, orderBy, orderDirection, skip, take);
+        }
+
         public virtual Task<IQueryable<T>> GetAllAsync()
         {
             return base.GetAllAsync<T>(null, null, null, null, null);
@@ -50,29 +60,30 @@ namespace OfferingSolutions.GenericEFCore.RepositoryContext
             return base.GetAllAsync(predicate, null, null, null, null);
         }
 
-        public virtual void Delete(Expression<Func<T, bool>> predicate)
+        public virtual Task<IQueryable<T>> GetAllAsync(Func<IQueryable<T>, IIncludableQueryable<T, object>> include)
         {
-            base.Delete(predicate);
+            return base.GetAllAsync(include);
         }
 
-        public virtual IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, int? skip = null, int? take = null)
+        public virtual Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IIncludableQueryable<T, object>> include)
         {
-            return base.GetAll(predicate, orderBy, include, skip, take);
+            return base.GetAllAsync(predicate, include, null, null, null);
         }
 
-        public virtual IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null, string orderBy = null, string orderDirection = "asc", Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, int? skip = null, int? take = null)
+        public virtual Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, 
+             int? skip = null, int? take = null)
         {
-            return base.GetAll(predicate, orderBy, orderDirection, include, skip, take);
+            return base.GetAllAsync(predicate, include, orderBy, skip, take);
         }
 
-        public virtual Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, int? skip = null, int? take = null)
+        public virtual Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null,
+             Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+            string orderBy = null,
+            string orderDirection = "asc", int? skip = null, int? take = null)
         {
-            return base.GetAllAsync(predicate, orderBy, include, skip, take);
-        }
-
-        public virtual Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, string orderBy = null, string orderDirection = "asc", Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, int? skip = null, int? take = null)
-        {
-            return base.GetAllAsync(predicate, orderBy, orderDirection, include, skip, take);
+            return base.GetAllAsync(predicate, include, orderBy, orderDirection, skip, take);
         }
 
         public virtual T GetSingle(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
@@ -85,24 +96,34 @@ namespace OfferingSolutions.GenericEFCore.RepositoryContext
             return base.GetSingleAsync(predicate, include);
         }
 
+        public virtual void Add(T entity)
+        {
+            base.Add(entity);
+        }
+
+        public virtual void AddAsync(T entity)
+        {
+            base.AddAsync(entity);
+        }
+
         public virtual T Update(T toUpdate)
         {
             return base.Update(toUpdate);
         }
 
+        public virtual void Delete(T entity)
+        {
+            base.Delete(entity);
+        }
+
+        public virtual void Delete(Expression<Func<T, bool>> predicate)
+        {
+            base.Delete(predicate);
+        }
+
         public virtual int Count()
         {
             return base.Count<T>();
-        }
-
-        public virtual IQueryable<T> GetAll(Func<IQueryable<T>, IIncludableQueryable<T, object>> include)
-        {
-            return base.GetAll(include);
-        }
-
-        public virtual Task<IQueryable<T>> GetAllAsync(Func<IQueryable<T>, IIncludableQueryable<T, object>> include)
-        {
-            return base.GetAllAsync(include);
         }
     }
 }

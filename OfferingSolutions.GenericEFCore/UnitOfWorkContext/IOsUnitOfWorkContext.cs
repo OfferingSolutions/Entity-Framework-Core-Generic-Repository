@@ -19,29 +19,29 @@ namespace OfferingSolutions.GenericEFCore.UnitOfWorkContext
         IQueryable<T> GetAll<T>(Func<IQueryable<T>, IIncludableQueryable<T, object>> include) where T : class;
 
         IQueryable<T> GetAll<T>(
-            Expression<Func<T, bool>> predicate = null, 
+            Expression<Func<T, bool>> predicate = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, 
-            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, 
             int? skip = null, int? take = null) where T : class;
 
         IQueryable<T> GetAll<T>(
-            Expression<Func<T, bool>> predicate = null, 
+            Expression<Func<T, bool>> predicate = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
             string orderBy = null, 
             string orderDirection = "asc", 
-            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, 
             int? skip = null, int? take = null) where T : class;
 
         Task<IQueryable<T>> GetAllAsync<T>(
-            Expression<Func<T, bool>> predicate = null, 
+            Expression<Func<T, bool>> predicate = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, 
-            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, 
             int? skip = null, int? take = null) where T : class;
 
         Task<IQueryable<T>> GetAllAsync<T>(
-            Expression<Func<T, bool>> predicate = null, 
+            Expression<Func<T, bool>> predicate = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
             string orderBy = null, 
             string orderDirection = "asc", 
-            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, 
             int? skip = null, int? take = null) where T : class;
 
         Task<IQueryable<T>> GetAllAsync<T>() where T : class;

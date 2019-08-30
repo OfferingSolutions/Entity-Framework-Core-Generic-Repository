@@ -17,9 +17,45 @@ namespace OfferingSolutions.GenericEFCore.RepositoryBase
             _dataBaseContext = context;
         }
 
+        public IQueryable<T> GetAll()
+        {
+            return this.GetAll(null, null, null, null, null);
+        }
+
+        public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate)
+        {
+            return this.GetAll(predicate, null, null, null, null);
+        }
+
+        public IQueryable<T> GetAll(Func<IQueryable<T>, IIncludableQueryable<T, object>> include)
+        {
+            return this.GetAll(null, include, null, null, null);
+        }
+
+        public Task<IQueryable<T>> GetAllAsync()
+        {
+            return this.GetAllAsync(null, null, null, null, null);
+        }
+
+        public Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
+        {
+            return this.GetAllAsync(predicate, null, null, null, null);
+        }
+
+        public Task<IQueryable<T>> GetAllAsync(Func<IQueryable<T>, IIncludableQueryable<T, object>> include)
+        {
+            return this.GetAllAsync(null, include, null, null, null);
+        }
+
         public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null,
-          Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+                                        Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
+        {
+            return GetQueryable(predicate, include);
+        }
+
+        public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null,
           Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+          Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
           int? skip = null, int? take = null)
         {
             IQueryable<T> query = GetQueryable(predicate, include);
@@ -40,13 +76,14 @@ namespace OfferingSolutions.GenericEFCore.RepositoryBase
             }
 
             return query;
-
         }
 
+        
+
         public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null,
-        string orderBy = null, string orderDirection = "asc",
-         Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
-         int? skip = null, int? take = null)
+                                     Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+                                    string orderBy = null, string orderDirection = "asc",
+                                     int? skip = null, int? take = null)
         {
             IQueryable<T> query = GetQueryable(predicate, include);
 
@@ -69,9 +106,9 @@ namespace OfferingSolutions.GenericEFCore.RepositoryBase
         }
 
         public Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null,
-         Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-         Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
-         int? skip = null, int? take = null)
+                                                 Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+                                                 Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+                                                 int? skip = null, int? take = null)
         {
             IQueryable<T> query = GetQueryable(predicate, include);
 
@@ -91,12 +128,17 @@ namespace OfferingSolutions.GenericEFCore.RepositoryBase
             }
 
             return new Task<IQueryable<T>>(() => query);
-
         }
 
         public Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null,
-        string orderBy = null, string orderDirection = "asc",
+                                                Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
+        {
+            return new Task<IQueryable<T>> (() => GetQueryable(predicate, include)); 
+        }
+
+        public Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null,
          Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+        string orderBy = null, string orderDirection = "asc",
          int? skip = null, int? take = null)
         {
             IQueryable<T> query = GetQueryable(predicate, include);
@@ -124,9 +166,9 @@ namespace OfferingSolutions.GenericEFCore.RepositoryBase
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-         public T GetSingle(
-          Expression<Func<T, bool>> predicate = null,
-          Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
+        public T GetSingle(
+         Expression<Func<T, bool>> predicate = null,
+         Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
         {
             IQueryable<T> query = GetQueryable(predicate, include);
 
