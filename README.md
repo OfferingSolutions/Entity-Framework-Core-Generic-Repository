@@ -14,6 +14,42 @@ Have fun. Hope this helps :)
 ## Example for Generic Repositories
 
 ```c#
+interface IPersonRepository : IGenericRepositoryContext<Person>
+{
+    void MyNewFunction(int id);
+
+    void Add(Person toAdd);
+}
+```
+
+```c#
+public class PersonRepository : GenericRepositoryContext<Person>, IPersonRepository
+{
+    public PersonRepository(DataBaseContext dbContext)
+        : base(dbContext)
+    {
+
+    }
+
+    public void MyNewFunction(int id)
+    {
+        //Do Something
+    }
+
+    public override void Add(Person toAdd)
+    {
+        MyAdditionalAddFunction();
+        base.Add(toAdd);
+    }
+
+    private void MyAdditionalAddFunction()
+    {
+        //Do something else...
+    }
+}
+```
+
+```c#
 using (IPersonRepository personRepository = new PersonRepository(new DataBaseContext()))
 {
     personRepository.Add(new Person() { Name = "John Doe" });
