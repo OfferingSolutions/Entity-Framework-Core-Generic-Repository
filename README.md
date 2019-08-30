@@ -19,9 +19,9 @@ dotnet add package OfferingSolutions.GenericEFCore
 
 Have fun. Hope this helps :)
 
-### Usage
+## Usage
 
-## Example for Generic Repositories
+### Example for Generic Repositories
 
 ```c#
 interface IPersonRepository : IGenericRepositoryContext<Person>
@@ -92,7 +92,7 @@ using (IPersonRepository personRepository = new PersonRepository(new DataBaseCon
 }
 ```
 
-## Methods
+### Methods
 
 | Name                                                                                               | Description                                                                                                      | Example                                                                                                                                                            |
 | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -116,7 +116,7 @@ using (IPersonRepository personRepository = new PersonRepository(new DataBaseCon
 | `int Save()`                                                                                       | Saves                                                                                                            | `personRepository.Count();`                                                                                                                                        |
 | `Task<int> SaveAsync()`                                                                            | Saves (async)                                                                                                    | `personRepository.Count();`                                                                                                                                        |
 
-## Example for complete Unit of Work
+### Example for complete Unit of Work
 
 ```c#
 using (IOsUnitOfWorkContext unitOfWorkContext = new OsUnitOfWorkContext(new DataBaseContext()))
