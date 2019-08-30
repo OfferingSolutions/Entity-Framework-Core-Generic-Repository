@@ -26,6 +26,26 @@ Have fun. Hope this helps :)
 ```c#
 interface IPersonRepository : IGenericRepositoryContext<Person>
 {
+
+}
+```
+
+```c#
+public class PersonRepository : GenericRepositoryContext<Person>, IPersonRepository
+{
+    public PersonRepository(DataBaseContext dbContext)
+        : base(dbContext)
+    {
+
+    }
+}
+```
+
+Or you can add and overwrite methods
+
+```c#
+interface IPersonRepository : IGenericRepositoryContext<Person>
+{
     void MyNewFunction(int id);
 
     void Add(Person toAdd);
