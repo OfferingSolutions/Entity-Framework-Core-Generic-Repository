@@ -2,3 +2,8 @@
 OfferingSolutions.UoWCore.SampleApp/bin/
 OfferingSolutions.UoWCore/bin/
 OfferingSolutions.UoWCore.SampleApp/obj/
+
+/OfferingSolutions.GenericEFCore.SampleApp/bin/
+/OfferingSolutions.GenericEFCore.SampleApp/obj
+/OfferingSolutions.GenericEFCore/bin
+/OfferingSolutions.GenericEFCore/obj
