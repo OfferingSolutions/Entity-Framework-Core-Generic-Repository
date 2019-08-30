@@ -5,9 +5,10 @@ Offering you a complete abstraction of the UnitOfWork-Pattern & Repository patte
 See the Sample-Project how this works.
 
 See Nuget to load this package:
-[NugetLink here]
+[Nuget](https://www.nuget.org/packages/OfferingSolutions.GenericEFCore/0.0.2)
 
-<pre>Install-Package [NugetLink here]</pre>
+`Install-Package Install-Package OfferingSolutions.GenericEFCore`
+`dotnet add package OfferingSolutions.GenericEFCore`
 
 Have fun. Hope this helps :)
 
