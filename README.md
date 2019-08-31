@@ -194,8 +194,8 @@ Example: `personRepository.Count();`
 ### Saving entities
 
 ```
-`int Save()`
-`Task<int> SaveAsync()`
+int Save()
+Task<int> SaveAsync()
 ```
 
 Example: `personRepository.Save();`
