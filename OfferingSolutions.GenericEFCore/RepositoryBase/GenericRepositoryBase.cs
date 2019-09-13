@@ -78,8 +78,6 @@ namespace OfferingSolutions.GenericEFCore.RepositoryBase
             return query;
         }
 
-        
-
         public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null,
                                      Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
                                     string orderBy = null, string orderDirection = "asc",
@@ -214,6 +212,11 @@ namespace OfferingSolutions.GenericEFCore.RepositoryBase
         public int Count()
         {
             return _dataBaseContext.Set<T>().Count();
+        }
+
+        public int Count(Expression<Func<T, bool>> predicate)
+        {
+            return _dataBaseContext.Set<T>().Count(predicate);
         }
 
         private IQueryable<T> GetQueryable(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)

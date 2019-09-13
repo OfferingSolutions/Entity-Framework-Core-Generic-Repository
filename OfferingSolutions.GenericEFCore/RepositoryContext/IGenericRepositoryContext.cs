@@ -51,6 +51,7 @@ namespace OfferingSolutions.GenericEFCore.RepositoryContext
         void Delete(Expression<Func<T, bool>> predicate);
 
         int Count();
+        int Count(Expression<Func<T, bool>> predicate);
 
         int Save();
 

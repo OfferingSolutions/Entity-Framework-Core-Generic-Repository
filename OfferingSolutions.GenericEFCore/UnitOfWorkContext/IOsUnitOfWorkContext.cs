@@ -11,6 +11,7 @@ namespace OfferingSolutions.GenericEFCore.UnitOfWorkContext
         void Add<T>(T entity) where T : class;
         void AddAsync<T>(T entity) where T : class;
         int Count<T>() where T : class;
+        int Count<T>(Expression<Func<T, bool>> predicate) where T : class;
         void Delete<T>(Expression<Func<T, bool>> predicate) where T : class;
         void Delete<T>(T toDelete) where T : class;
 

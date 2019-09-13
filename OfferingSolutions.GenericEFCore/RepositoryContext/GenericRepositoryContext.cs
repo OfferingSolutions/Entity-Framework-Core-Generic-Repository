@@ -125,5 +125,10 @@ namespace OfferingSolutions.GenericEFCore.RepositoryContext
         {
             return base.Count<T>();
         }
+
+        public virtual int Count(Expression<Func<T, bool>> predicate)
+        {
+            return base.Count<T>(predicate);
+        }
     }
 }

@@ -37,6 +37,10 @@ namespace OfferingSolutions.GenericEFCore.BaseContext
             return _osUnitOfWork.GetRepository<T>().Count();
         }
 
+        public int Count<T>(Expression<Func<T, bool>> predicate) where T : class
+        {
+            return _osUnitOfWork.GetRepository<T>().Count(predicate);
+        }
 
         public IQueryable<T> GetAll<T>() where T : class
         {

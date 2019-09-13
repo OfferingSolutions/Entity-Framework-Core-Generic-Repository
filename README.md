@@ -178,7 +178,7 @@ Example: `personRepository.Update(changedPerson);`
 
 ```
 void Delete([entity]);
-void Delete([predicate])
+void Delete([predicate]);
 ```
 
 Example: `personRepository.Delete(toDelete);` or `personRepository.Delete(x => x.Id == id);`
@@ -186,10 +186,11 @@ Example: `personRepository.Delete(toDelete);` or `personRepository.Delete(x => x
 ### Count entities
 
 ```
-int Count()
+int Count();
+int Count([predicate]);
 ```
 
-Example: `personRepository.Count();`
+Example: `personRepository.Count();` or `personRepository.Count(x => x.Name == "John Doe");`
 
 ### Saving entities
 
