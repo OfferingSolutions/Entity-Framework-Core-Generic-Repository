@@ -226,7 +226,7 @@ using (IOsUnitOfWorkContext unitOfWorkContext = new OsUnitOfWorkContext(new Data
     // Savechanges
     unitOfWorkContext.Save();
 
-    unitOfWorkContext.SaveASync();
+    unitOfWorkContext.SaveAsync();
 
     // Get all Persons
     var persons = unitOfWorkContext.GetAll<Person>().ToList();
