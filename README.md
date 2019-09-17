@@ -13,7 +13,7 @@ See Nuget to load this package:
 [Nuget](https://www.nuget.org/packages/OfferingSolutions.GenericEFCore)
 
 ```
-Install-Package Install-Package OfferingSolutions.GenericEFCore
+Install-Package OfferingSolutions.GenericEFCore
 ```
 
 ```
