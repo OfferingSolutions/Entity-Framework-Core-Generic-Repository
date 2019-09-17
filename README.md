@@ -1,5 +1,8 @@
 # Generic Repository Pattern (ASP.NET Core)
 
+![NuGet](https://img.shields.io/nuget/v/OfferingSolutions.GenericEFCore)
+![Downloads](https://img.shields.io/nuget/dt/OfferingSolutions.GenericEFCore) 
+
 Offering you a complete abstraction of the UnitOfWork-Pattern & Repository pattern with the basic CRUD-Operations, the Repository Pattern and extended functions like CustomRepositores all in one small lib. Made for the Entity Framework Core.
 
 See the Sample-Project how this works.
