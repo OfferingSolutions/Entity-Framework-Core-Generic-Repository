@@ -38,7 +38,7 @@ namespace OfferingSolutions.GenericEFCore.Tests
         {
             // Arrange
             var options = new DbContextOptionsBuilder<DataBaseContext>()
-                .UseInMemoryDatabase(databaseName: nameof(Insert_Adds_To_Database))
+                .UseInMemoryDatabase(databaseName: nameof(Count_Counts_Correct))
                 .Options;
 
             // Act
