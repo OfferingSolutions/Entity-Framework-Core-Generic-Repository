@@ -34,6 +34,32 @@ namespace OfferingSolutions.GenericEFCore.Tests
         }
 
         [TestMethod]
+        public void Count_Counts_Correct()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<DataBaseContext>()
+                .UseInMemoryDatabase(databaseName: nameof(Insert_Adds_To_Database))
+                .Options;
+
+            // Act
+            using (IPersonRepository personRepository = new PersonRepository(new DataBaseContext(options)))
+            {
+                personRepository.Add(new Person() { Name = "John Doe" });
+                personRepository.Add(new Person() { Name = "Jane Doe" });
+                personRepository.Save();
+            }
+
+            // Assert
+            using (IPersonRepository personRepository = new PersonRepository(new DataBaseContext(options)))
+            {
+                var countWithPredicate = personRepository.Count(x => x.Name == "John Doe");
+                Assert.AreEqual(1, countWithPredicate);
+                var overallCount = personRepository.Count();
+                Assert.AreEqual(2, overallCount);
+            }
+        }
+
+        [TestMethod]
         public void Update_Modifies_Entry_In_Database()
         {
             // Arrange
