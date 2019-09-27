@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>1.2.0</Version>
+    <Version>1.3.0</Version>
     <Authors>Fabian Gosebrink</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -11,6 +11,7 @@
     <PackageTags>Generic Repository Entity Framework Core</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Offering you a complete abstraction of the UnitOfWork-Pattern &amp; Repository pattern with the basic CRUD-Operations, the Repository Pattern and extended functions like CustomRepositores all in one small lib. Made for the Entity Framework Core.</Description>
+    <AssemblyVersion>1.3.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
