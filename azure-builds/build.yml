@@ -38,6 +38,7 @@ steps:
     projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 - task: DotNetCoreCLI@2
+  displayName: Pack
   inputs:
     command: 'pack'
     packagesToPack: '**/OfferingSolutions.GenericEFCore/*.csproj'
