@@ -54,7 +54,6 @@ steps:
     command: 'pack'
     configuration: $(BuildConfiguration)
     packagesToPack: '**/$(ProjectName).csproj'
-    versioningScheme: 'byBuildNumber'
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Build Artifact
