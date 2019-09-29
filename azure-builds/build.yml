@@ -28,7 +28,7 @@ steps:
     inputs:
       command: build
       projects: '**/*.csproj'
-      arguments: '--configuration Release' # Update this to match your need
+      arguments: '--configuration  $(buildConfiguration)'
   - task: DotNetCoreCLI@2
     displayName: Test
     inputs:
@@ -39,11 +39,12 @@ steps:
     inputs:
       command: 'pack'
       packagesToPack: '**/OfferingSolutions.GenericEFCore/*.csproj'
-      versioningScheme: 'off'
+      versioningScheme: 'byBuildNumber'
 
-  - task: PublishBuildArtifacts@1
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
-    inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'drop'
-      publishLocation: 'Container'
+- task: NuGetCommand@2
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'ExternalNugetServer'
