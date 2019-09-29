@@ -10,7 +10,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-name: '$(BuildDefinitionName)-$(Year:yyyy).$(Month).$(DayOfMonth)$(Rev:.r)-$(Build.BuildNumber)'
+name: $(Build.DefinitionName)-$(date:yyyyMMdd)$(rev:.r)
 
 variables:
   buildConfiguration: 'Release'
