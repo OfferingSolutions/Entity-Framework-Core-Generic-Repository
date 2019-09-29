@@ -19,24 +19,28 @@ steps:
 - task: DotNetCoreInstaller@1
   inputs:
     version: '3.0.100' # replace this value with the version that you need for your project
+
 - task: DotNetCoreCLI@2
   displayName: Restore
   inputs:
     command: 'restore'
     feedsToUse: 'select'
     vstsFeed: '3f1a8a64-d40c-4a93-be38-2a07bc7e5e44'
+
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
     command: build
     projects: '**/*.csproj'
     arguments: '--configuration  $(buildConfiguration)'
+
 - task: DotNetCoreCLI@2
   displayName: Test
   inputs:
     command: test
     projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+
 - task: DotNetCoreCLI@2
   displayName: Pack
   inputs:
@@ -44,6 +48,7 @@ steps:
     packagesToPack: '**/OfferingSolutions.GenericEFCore/*.csproj'
     versioningScheme: 'byEnvVar'
     versionEnvVar: 'Version.Revision'
+    
 - task: NuGetCommand@2
   displayName: Push/Publish
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
