@@ -10,6 +10,8 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+name: $(Build.DefinitionName)-$(date:yyyyMMdd)$(rev:.r)
+
 variables:
   buildConfiguration: 'Release'
   Version.MajorMinor: 1.0
@@ -19,33 +21,44 @@ steps:
 - task: DotNetCoreInstaller@1
   inputs:
     version: '3.0.100' # replace this value with the version that you need for your project
+
 - task: DotNetCoreCLI@2
   displayName: Restore
   inputs:
     command: 'restore'
     feedsToUse: 'select'
     vstsFeed: '3f1a8a64-d40c-4a93-be38-2a07bc7e5e44'
+
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
     command: build
     projects: '**/*.csproj'
     arguments: '--configuration  $(buildConfiguration)'
+
 - task: DotNetCoreCLI@2
   displayName: Test
   inputs:
     command: test
     projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+
 - task: DotNetCoreCLI@2
   displayName: Pack
   inputs:
     command: 'pack'
     packagesToPack: '**/OfferingSolutions.GenericEFCore/*.csproj'
-    versioningScheme: 'byEnvVar'
-    versionEnvVar: 'Version.Revision'
+    versioningScheme: 'byBuildNumber'
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish Build Artifact
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
 - task: NuGetCommand@2
-  displayName: Push/Publish
+  displayName: Publish
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
   inputs:
     command: 'push'
