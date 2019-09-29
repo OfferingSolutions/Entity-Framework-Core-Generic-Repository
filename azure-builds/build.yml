@@ -10,17 +10,22 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-name: $(Build.DefinitionName)-$(date:yyyyMMdd)$(rev:.r)
+# name: '$(majorMinorVersion).$(semanticVersion).$(Rev:.r)'
 
 variables:
   buildConfiguration: 'Release'
-  Version.MajorMinor: 1.0
-  Version.Revision: $[counter(variables['Version.MajorMinor'], 0)]
+  projectName: 'OfferingSolutions.GenericEFCore'
   
 steps:
 - task: DotNetCoreInstaller@1
   inputs:
     version: '3.0.100' # replace this value with the version that you need for your project
+
+- script: echo %Action%%BuildVersion%
+  displayName: 'Set build version'
+  env:
+    Action: '##vso[build.updatebuildnumber]'
+    BuildVersion: $(GitVersion.SemVer)
 
 - task: DotNetCoreCLI@2
   displayName: Restore
@@ -44,11 +49,20 @@ steps:
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 
 - task: DotNetCoreCLI@2
-  displayName: Pack
+  displayName: 'NuGet pack'
   inputs:
     command: 'pack'
-    packagesToPack: '**/OfferingSolutions.GenericEFCore/*.csproj'
-    versioningScheme: 'byBuildNumber'
+    configuration: $(BuildConfiguration)
+    packagesToPack: '**/$(ProjectName).csproj'
+
+- task: NuGetCommand@2
+  displayName: Publish to nuget.org
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'external'
+    publishVstsFeed: 'ExternalNugetServer'
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Build Artifact
@@ -56,12 +70,3 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-
-- task: NuGetCommand@2
-  displayName: Publish
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
-  inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-    nuGetFeedType: 'external'
-    publishFeedCredentials: 'ExternalNugetServer'
