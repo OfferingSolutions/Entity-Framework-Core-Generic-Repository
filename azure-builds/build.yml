@@ -55,18 +55,18 @@ steps:
     configuration: $(BuildConfiguration)
     packagesToPack: '**/$(ProjectName).csproj'
 
+- task: NuGetCommand@2
+  displayName: Publish to nuget.org
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'external'
+    publishVstsFeed: 'ExternalNugetServer'
+
 - task: PublishBuildArtifacts@1
   displayName: Publish Build Artifact
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-
-- task: NuGetCommand@2
-  displayName: Publish
-  # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
-  inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-    nuGetFeedType: 'internal'
-    publishVstsFeed: '3f1a8a64-d40c-4a93-be38-2a07bc7e5e44'
