@@ -62,7 +62,7 @@ steps:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     nuGetFeedType: 'external'
-    publishVstsFeed: 'ExternalNugetServer'
+    publishFeedCredentials: 'ExternalNugetServer'
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Build Artifact
