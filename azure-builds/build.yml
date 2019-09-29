@@ -10,7 +10,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-name: '$(majorMinorVersion).$(semanticVersion).$(Rev:.r)'
+# name: '$(majorMinorVersion).$(semanticVersion).$(Rev:.r)'
 
 variables:
   buildConfiguration: 'Release'
