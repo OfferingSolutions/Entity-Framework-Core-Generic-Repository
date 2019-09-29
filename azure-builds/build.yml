@@ -42,7 +42,8 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: '**/OfferingSolutions.GenericEFCore/*.csproj'
-    versioningScheme: 'byBuildNumber'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: '$(Version.Revision)'
 - task: NuGetCommand@2
   displayName: Push/Publish
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
