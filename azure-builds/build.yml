@@ -10,12 +10,11 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-name: $(Build.DefinitionName)-$(date:yyyyMMdd)$(rev:.r)
+name: '$(BuildDefinitionName)_$(Year:yyyy).$(Month).$(DayOfMonth)$(Rev:.r)'
 
 variables:
   buildConfiguration: 'Release'
-  Version.MajorMinor: 1.0
-  Version.Revision: $[counter(variables['Version.MajorMinor'], 0)]
+  projectName: 'OfferingSolutions.GenericEFCore'
   
 steps:
 - task: DotNetCoreInstaller@1
@@ -44,10 +43,11 @@ steps:
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 
 - task: DotNetCoreCLI@2
-  displayName: Pack
+  displayName: 'NuGet pack'
   inputs:
     command: 'pack'
-    packagesToPack: '**/OfferingSolutions.GenericEFCore/*.csproj'
+    configuration: $(BuildConfiguration)
+    packagesToPack: '**/$(ProjectName).csproj'
     versioningScheme: 'byBuildNumber'
 
 - task: PublishBuildArtifacts@1
