@@ -12,7 +12,9 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-
+  Version.MajorMinor: 1.0
+  Version.Revision: $[counter(variables['Version.MajorMinor'], 0)]
+  
 steps:
 - task: DotNetCoreInstaller@1
   inputs:
