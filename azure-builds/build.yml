@@ -59,7 +59,7 @@ steps:
 
 - task: NuGetCommand@2
   displayName: Publish
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
+  # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
   inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
