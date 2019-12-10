@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfferingSolutions.GenericEF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfferingSolutions.GenericEFCore.SampleApp", "OfferingSolutions.GenericEFCore.SampleApp\OfferingSolutions.GenericEFCore.SampleApp.csproj", "{314C8C42-8B4D-4303-B738-DBA7253A12C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfferingSolutions.GenericEFCore.Tests", "OfferingSolutions.GenericEFCore.Tests\OfferingSolutions.GenericEFCore.Tests.csproj", "{3622BDD3-9A92-43B4-A655-1442E26E47ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{314C8C42-8B4D-4303-B738-DBA7253A12C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{314C8C42-8B4D-4303-B738-DBA7253A12C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{314C8C42-8B4D-4303-B738-DBA7253A12C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3622BDD3-9A92-43B4-A655-1442E26E47ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3622BDD3-9A92-43B4-A655-1442E26E47ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3622BDD3-9A92-43B4-A655-1442E26E47ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3622BDD3-9A92-43B4-A655-1442E26E47ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

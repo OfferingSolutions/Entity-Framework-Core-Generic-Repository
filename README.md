@@ -1,17 +1,50 @@
-# Generic Repository Pattern for Entity Framework Core
+# Generic Repository Pattern (ASP.NET Core)
+
+![NuGet](https://img.shields.io/nuget/v/OfferingSolutions.GenericEFCore)
+![Downloads](https://img.shields.io/nuget/dt/OfferingSolutions.GenericEFCore) 
 
 Offering you a complete abstraction of the UnitOfWork-Pattern & Repository pattern with the basic CRUD-Operations, the Repository Pattern and extended functions like CustomRepositores all in one small lib. Made for the Entity Framework Core.
 
 See the Sample-Project how this works.
 
-See Nuget to load this package:
-[NugetLink here]
+## Installation
 
-<pre>Install-Package [NugetLink here]</pre>
+See Nuget to load this package:
+[Nuget](https://www.nuget.org/packages/OfferingSolutions.GenericEFCore)
+
+```
+Install-Package OfferingSolutions.GenericEFCore
+```
+
+```
+dotnet add package OfferingSolutions.GenericEFCore
+```
 
 Have fun. Hope this helps :)
 
-## Example for Generic Repositories
+## Usage
+
+### Example for Generic Repositories
+
+```c#
+interface IPersonRepository : IGenericRepositoryContext<Person>
+{
+
+}
+```
+
+```c#
+public class PersonRepository : GenericRepositoryContext<Person>, IPersonRepository
+{
+    public PersonRepository(DataBaseContext dbContext)
+        : base(dbContext)
+    {
+
+    }
+}
+```
+
+Or you can add and overwrite methods
 
 ```c#
 interface IPersonRepository : IGenericRepositoryContext<Person>
@@ -64,29 +97,116 @@ using (IPersonRepository personRepository = new PersonRepository(new DataBaseCon
 
 ## Methods
 
-| Name                                                                                               | Description                                                                                                      | Example                                                                                                                                                            |
-| -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `IQueryable<T> GetAll()`                                                                           | Gets all entities                                                                                                | `personRepository.GetAll();`                                                                                                                                       |
-| `IQueryable<T> GetAll([predicate])`                                                                | Gets all entities with predicate                                                                                 | `personRepository.GetAll(x => x.Name == "John Doe");`                                                                                                              |
-| `IQueryable<T> GetAll([include])`                                                                  | Gets all entities and includes a child entity                                                                    | `personRepository.GetAll(source => source.Include(y => y.Things));`                                                                                                |
-| `IQueryable<T> GetAll([predicate],[orderBy],[include],[skip],[take])`                              | Gets all entities with predicate, includes, orderby, skip & take; all nullable                                   | `personRepository.GetAll(predicate: x => x.Name == "John Doe", orderBy: q => q.OrderBy(d => d.Name), source => source.Include(y => y.Things));`                    |
-| `Task<IQueryable<T>> GetAllAsync()`                                                                | Gets all entities                                                                                                | `personRepository.GetAllAsync();`                                                                                                                                  |
-| `Task<IQueryable<T>> GetAllAsync([predicate])`                                                     | Gets all entities with predicate                                                                                 | `personRepository.GetAllAsync(x => x.Name == "John Doe");`                                                                                                         |
-| `Task<IQueryable<T>> GetAllAsync([include])`                                                       | Gets all entities and includes a child entity                                                                    | `personRepository.GetAllAsync(source => source.Include(y => y.Things));`                                                                                           |
-| `Task<IQueryable<T>> GetAllAsync([predicate],[orderBy],[include],[skip],[take])`                   | Gets all entities with predicate, includes, orderby, skip & take; all nullable                                   | `personRepository.GetAllAsync(x => x.Name == "John Doe", q => q.OrderBy(d => d.Name), source => source.Include(y => y.Things));`                                   |
-| `Task<IQueryable<T>> GetAllAsync([predicate],[orderBy], [orderDirection],[include],[skip],[take])` | Gets all entities with predicate, includes, orderby (string), orderDirection (string), skip & take; all nullable | `personRepository.GetAllAsync(x => x.Name == "John Doe", "Name", "asc", source => source.Include(y => y.Things));`                                                 |
-| `T GetSingle([predicate],[include])`                                                               | Gets single entity with predicate and include; all nullable                                                      | `personRepository.GetSingle(x => x.Name == "John Doe");` or `personRepository.GetSingle(x => x.Name == "John Doe", source => source.Include(y => y.Things));`      |
-| `Task<T> GetSingleAsync([predicate],[include])`                                                    | Gets single entity with predicate and include; all nullable                                                      | `personRepository.GetSingleAsync(x => x.Name == "John Doe");` or `personRepository.GetSingle(x => x.Name == "John Doe", source => source.Include(y => y.Things));` |
-| `void Add([entity])`                                                                               | Adds an entity                                                                                                   | `personRepository.Add(new Person() { Name = "John Doe" });`                                                                                                        |
-| `void AddAsync([entity])`                                                                          | Adds an entity                                                                                                   | `personRepository.AddAsync(new Person() { Name = "John Doe" });`                                                                                                   |
-| `T Update([entity])`                                                                               | Updates an entity                                                                                                | `personRepository.Update(changedPerson);`                                                                                                                          |
-| `void Delete([entity])`                                                                            | Deletes an entity by complete entity                                                                             | `personRepository.Delete(toDelete);`                                                                                                                               |
-| `void Delete([predicate])`                                                                         | Deletes an entity by predicate                                                                                   | `personRepository.Delete(x => x.Id == id);`                                                                                                                        |
-| `int Count()`                                                                                      | Counts all Items in that repository                                                                              | `personRepository.Count();`                                                                                                                                        |
-| `int Save()`                                                                                       | Saves                                                                                                            | `personRepository.Count();`                                                                                                                                        |
-| `Task<int> SaveAsync()`                                                                            | Saves (async)                                                                                                    | `personRepository.Count();`                                                                                                                                        |
+### Get all entities
 
-## Example for complete Unit of Work
+```
+IQueryable<T> GetAll();
+Task<IQueryable<T>> GetAllAsync()
+```
+
+Example: `personRepository.GetAll();`
+
+### Gets all entities with predicate
+
+```
+IQueryable<T> GetAll([predicate])
+Task<IQueryable<T>> GetAllAsync([predicate])
+```
+
+Example: `personRepository.GetAll(x => x.Name == "John Doe");`
+
+### Gets all entities and includes child entities
+
+```
+IQueryable<T> GetAll([include])
+Task<IQueryable<T>> GetAllAsync([include])
+```
+
+Example: `personRepository.GetAll(source => source.Include(y => y.Things));`
+
+### Gets all entities with predicate and includes a child entity
+
+```
+IQueryable<T> GetAll([predicate],[include])
+Task<IQueryable<T>> GetAllAsync([predicate],[include])
+```
+
+Example: `personRepository.GetAll(x => x.Name == "John Doe", source => source.Include(y => y.Things));`
+
+### Gets all entities with predicate, includes, orderby, skip & take; all nullable (orderby as lambda)
+
+```
+IQueryable<T> GetAll([predicate],[include],[orderBy],[skip],[take])
+Task<IQueryable<T>> GetAllAsync([predicate],[include],[orderBy],[skip],[take])
+```
+
+Example: `personRepository.GetAll(predicate: x => x.Name == "John Doe", source => source.Include(y => y.Things), orderBy: q => q.OrderBy(d => d.Name));`
+
+### Gets all entities with predicate, includes, orderby (string), orderDirection (string), skip & take; all nullable
+
+```
+IQueryable<T> GetAll([predicate],[include],[orderBy],[orderDirection],[skip],[take])
+Task<IQueryable<T>> GetAllAsync([predicate],[include],[orderBy],[orderDirection],[skip],[take])
+```
+
+Example: `personRepository.GetAll(predicate: x => x.Name == "John Doe", source => source.Include(y => y.Things), orderBy: "Name", "asc", 5, 5);`
+
+### Gets single entity with predicate and include; all nullable
+
+```
+T GetSingle([predicate],[include]);
+Task<T> GetSingleAsync([predicate],[include])
+```
+
+Example: `personRepository.GetSingle(x => x.Name == "John Doe");` or `personRepository.GetSingle(x => x.Name == "John Doe", source => source.Include(y => y.Things));`
+
+### Adding an entity
+
+```
+void Add([entity]);
+void AddAsync([entity])
+```
+
+Example: `personRepository.Add(new Person() { Name = "John Doe" });`
+
+### Updating an entity
+
+```
+T Update([entity])
+```
+
+Example: `personRepository.Update(changedPerson);`
+
+### Deleting an entity
+
+```
+void Delete([entity]);
+void Delete([predicate]);
+```
+
+Example: `personRepository.Delete(toDelete);` or `personRepository.Delete(x => x.Id == id);`
+
+### Count entities
+
+```
+int Count();
+int Count([predicate]);
+```
+
+Example: `personRepository.Count();` or `personRepository.Count(x => x.Name == "John Doe");`
+
+### Saving entities
+
+```
+int Save()
+Task<int> SaveAsync()
+```
+
+Example: `personRepository.Save();`
+
+## Complete Unit of Work
+
+### Example for complete Unit of Work
 
 ```c#
 using (IOsUnitOfWorkContext unitOfWorkContext = new OsUnitOfWorkContext(new DataBaseContext()))
@@ -109,7 +229,7 @@ using (IOsUnitOfWorkContext unitOfWorkContext = new OsUnitOfWorkContext(new Data
     // Savechanges
     unitOfWorkContext.Save();
 
-    unitOfWorkContext.SaveASync();
+    unitOfWorkContext.SaveAsync();
 
     // Get all Persons
     var persons = unitOfWorkContext.GetAll<Person>().ToList();

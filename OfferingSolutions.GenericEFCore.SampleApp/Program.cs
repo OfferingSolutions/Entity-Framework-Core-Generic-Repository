@@ -47,6 +47,8 @@ namespace OfferingSolutions.GenericEFCore.SampleApp
                     }
 
                     List<Person> allPersonsOnAge35 = unitOfWorkContext.GetAll<Person>(x => x.Age == 35).ToList();
+                    var countAll = unitOfWorkContext.Count<Person>();
+                    var countAllWithpredicate = unitOfWorkContext.Count<Person>(x => x.Age == 35);
 
                     Console.WriteLine(allPersonsOnAge35.Count);
 
@@ -99,7 +101,8 @@ namespace OfferingSolutions.GenericEFCore.SampleApp
                     personRepository.Save();
                     var receivedPerson = personRepository.GetSingle(x => x.Name == "John Doe", source => source.Include(y => y.Things));
                     var allPersons = personRepository.GetAll(x => x.Name == "John Doe");
-                    var allPersonsWithThings = personRepository.GetAll(x => x.Name == "John Doe", q => q.OrderBy(d => d.Name), source => source.Include(y => y.Things));
+                    var allPersonCountWithPredicate = personRepository.Count(x => x.Name == "John Doe");
+                    var allPersonsWithThings = personRepository.GetAll(x => x.Name == "John Doe", source => source.Include(y => y.Things), q => q.OrderBy(d => d.Name));
                     Console.WriteLine(receivedPerson);
 
                     // Does something good ...

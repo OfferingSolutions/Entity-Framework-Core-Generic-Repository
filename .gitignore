@@ -7,3 +7,7 @@ OfferingSolutions.UoWCore.SampleApp/obj/
 /OfferingSolutions.GenericEFCore.SampleApp/obj
 /OfferingSolutions.GenericEFCore/bin
 /OfferingSolutions.GenericEFCore/obj
+.vscode/launch.json
+.vscode/tasks.json
+/OfferingSolutions.GenericEFCore.Tests/bin
+/OfferingSolutions.GenericEFCore.Tests/obj

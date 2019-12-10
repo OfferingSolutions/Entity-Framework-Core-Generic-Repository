@@ -1,20 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.0.1</Version>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Version>1.3.2</Version>
     <Authors>Fabian Gosebrink</Authors>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/OfferingSolutions/Entity-Framework-Core-Generic-Repository</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/OfferingSolutions/Entity-Framework-Core-Generic-Repository</RepositoryUrl>
+    <PackageTags>Generic Repository Entity Framework Core</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Description>Offering you a complete abstraction of the UnitOfWork-Pattern &amp; Repository pattern with the basic CRUD-Operations, the Repository Pattern and extended functions like CustomRepositores all in one small lib. Made for the Entity Framework Core.</Description>
+    <AssemblyVersion>1.3.2.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.18" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.19" />
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy &quot;$(ProjectDir)bin\Debug\OfferingSolutions.GenericEFCore.0.0.1.nupkg&quot; &quot;X:\&quot; /Y /I" />
-  </Target>
 
 </Project>

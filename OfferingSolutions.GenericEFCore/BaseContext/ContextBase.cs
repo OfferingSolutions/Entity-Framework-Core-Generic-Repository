@@ -37,6 +37,10 @@ namespace OfferingSolutions.GenericEFCore.BaseContext
             return _osUnitOfWork.GetRepository<T>().Count();
         }
 
+        public int Count<T>(Expression<Func<T, bool>> predicate) where T : class
+        {
+            return _osUnitOfWork.GetRepository<T>().Count(predicate);
+        }
 
         public IQueryable<T> GetAll<T>() where T : class
         {
@@ -49,35 +53,35 @@ namespace OfferingSolutions.GenericEFCore.BaseContext
         }
 
         public IQueryable<T> GetAll<T>(Expression<Func<T, bool>> predicate = null,
-         Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
          Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+         Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
          int? skip = null, int? take = null) where T : class
         {
-            return _osUnitOfWork.GetRepository<T>().GetAll(predicate, orderBy, include, skip, take);
+            return _osUnitOfWork.GetRepository<T>().GetAll(predicate, include, orderBy, skip, take);
         }
 
         public IQueryable<T> GetAll<T>(Expression<Func<T, bool>> predicate = null,
-        string orderBy = null, string orderDirection = "asc",
          Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+        string orderBy = null, string orderDirection = "asc",
          int? skip = null, int? take = null) where T : class
         {
-            return _osUnitOfWork.GetRepository<T>().GetAll(predicate, orderBy, orderDirection, include, skip, take);
+            return _osUnitOfWork.GetRepository<T>().GetAll(predicate, include, orderBy, orderDirection, skip, take);
         }
 
         public Task<IQueryable<T>> GetAllAsync<T>(Expression<Func<T, bool>> predicate = null,
+         Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
          Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-         Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
          int? skip = null, int? take = null) where T : class
         {
-            return _osUnitOfWork.GetRepository<T>().GetAllAsync(predicate, orderBy, include, skip, take);
+            return _osUnitOfWork.GetRepository<T>().GetAllAsync(predicate, include, orderBy, skip, take);
         }
 
         public Task<IQueryable<T>> GetAllAsync<T>(Expression<Func<T, bool>> predicate = null,
-        string orderBy = null, string orderDirection = "asc",
          Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+        string orderBy = null, string orderDirection = "asc",
          int? skip = null, int? take = null) where T : class
         {
-            return _osUnitOfWork.GetRepository<T>().GetAllAsync(predicate, orderBy, orderDirection, include, skip, take);
+            return _osUnitOfWork.GetRepository<T>().GetAllAsync(predicate, include, orderBy, orderDirection, skip, take);
         }
 
         public Task<IQueryable<T>> GetAllAsync<T>() where T : class
@@ -92,12 +96,12 @@ namespace OfferingSolutions.GenericEFCore.BaseContext
 
         public IQueryable<T> GetAll<T>(Func<IQueryable<T>, IIncludableQueryable<T, object>> include) where T : class
         {
-            return _osUnitOfWork.GetRepository<T>().GetAll(null, null, include, null, null);
+            return _osUnitOfWork.GetRepository<T>().GetAll(null, include, null,  null, null);
         }
 
         public Task<IQueryable<T>> GetAllAsync<T>(Func<IQueryable<T>, IIncludableQueryable<T, object>> include) where T : class
         {
-            return _osUnitOfWork.GetRepository<T>().GetAllAsync(null, null, include, null, null);
+            return _osUnitOfWork.GetRepository<T>().GetAllAsync(null, include, null,  null, null);
         }
 
         public T GetSingle<T>(
